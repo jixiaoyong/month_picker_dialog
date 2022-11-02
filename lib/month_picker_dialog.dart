@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:month_picker_dialog/src/MonthSelector.dart';
-import 'package:month_picker_dialog/src/YearSelector.dart';
 import 'package:month_picker_dialog/src/common.dart';
 import 'package:month_picker_dialog/src/locale_utils.dart';
+import 'package:month_picker_dialog/src/month_selector.dart';
+import 'package:month_picker_dialog/src/year_selector.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// Displays month picker dialog.
@@ -70,7 +70,8 @@ class _MonthPickerDialogState extends State<_MonthPickerDialog> {
   @override
   void initState() {
     super.initState();
-    selectedDate = DateTime(widget.initialDate!.year, widget.initialDate!.month);
+    selectedDate =
+        DateTime(widget.initialDate!.year, widget.initialDate!.month);
     if (widget.firstDate != null)
       _firstDate = DateTime(widget.firstDate!.year, widget.firstDate!.month);
     if (widget.lastDate != null)
@@ -143,12 +144,12 @@ class _MonthPickerDialogState extends State<_MonthPickerDialog> {
   ) {
     return ButtonBar(
       children: <Widget>[
-        FlatButton(
-          onPressed: () => Navigator.pop(context, null),
+        GestureDetector(
+          onTap: () => Navigator.pop(context, null),
           child: Text(widget.localizations.cancelButtonLabel),
         ),
-        FlatButton(
-          onPressed: () => Navigator.pop(context, selectedDate),
+        GestureDetector(
+          onTap: () => Navigator.pop(context, selectedDate),
           child: Text(widget.localizations.okButtonLabel),
         )
       ],

@@ -13,6 +13,7 @@ class MonthSelector extends StatefulWidget {
   final PublishSubject<UpDownButtonEnableState>
       upDownButtonEnableStatePublishSubject;
   final Locale? locale;
+
   const MonthSelector({
     Key? key,
     required DateTime this.openDate,
@@ -29,6 +30,7 @@ class MonthSelector extends StatefulWidget {
         assert(upDownPageLimitPublishSubject != null),
         assert(upDownButtonEnableStatePublishSubject != null),
         super(key: key);
+
   @override
   State<StatefulWidget> createState() => MonthSelectorState();
 }
@@ -65,23 +67,29 @@ class MonthSelectorState extends State<MonthSelector> {
 
   Widget _getMonthButton(final DateTime date, final String locale) {
     final bool isEnabled = _isEnabled(date);
-    return FlatButton(
-      onPressed: isEnabled
+    return GestureDetector(
+      onTap: isEnabled
           ? () => widget.onMonthSelected(DateTime(date.year, date.month))
           : null,
-      color: date.month == widget.selectedDate!.month &&
-              date.year == widget.selectedDate!.year
-          ? Theme.of(context).accentColor
-          : null,
-      textColor: date.month == widget.selectedDate!.month &&
-              date.year == widget.selectedDate!.year
-          ? Theme.of(context).accentTextTheme.button!.color
-          : date.month == DateTime.now().month &&
-                  date.year == DateTime.now().year
-              ? Theme.of(context).accentColor
-              : null,
-      child: Text(
-        DateFormat.MMM(locale).format(date),
+      child: Container(
+        color: date.month == widget.selectedDate!.month &&
+                date.year == widget.selectedDate!.year
+            ? Theme.of(context).accentColor
+            : null,
+        child: Center(
+          child: Text(
+            DateFormat.MMM(locale).format(date),
+            style: TextStyle(
+              color: date.month == widget.selectedDate!.month &&
+                      date.year == widget.selectedDate!.year
+                  ? Theme.of(context).accentTextTheme.button!.color
+                  : date.month == DateTime.now().month &&
+                          date.year == DateTime.now().year
+                      ? Theme.of(context).accentColor
+                      : null,
+            ),
+          ),
+        ),
       ),
     );
   }
